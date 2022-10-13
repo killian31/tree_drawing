@@ -1,5 +1,6 @@
 import turtle
 from random import randint
+from tqdm import tqdm
 
 # screen settings
 WIDTH, HEIGHT = 1.0, 1.0
@@ -45,7 +46,7 @@ def get_result(gens, axiom):
 axiom = get_result(gens, axiom)
 leo.left(90)
 leo.pensize(thickness)
-for chr in axiom:
+for chr in tqdm(axiom):
     leo.color(color)
     if chr == 'F' or chr == 'X':
         leo.forward(step)
