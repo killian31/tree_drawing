@@ -26,7 +26,7 @@ def y(level, angle, pbar, sz=150):
 
         # recursive call for
         # the right subtree
-        y(level = level - 1, angle = angle, pbar=pbar, sz = 0.8 * sz)
+        y(level = level - 1, angle = angle, pbar=pbar, sz = 0.7 * sz)
         
         pencolor(0, 255//level, 0)
         initialize_color(level)
@@ -34,7 +34,7 @@ def y(level, angle, pbar, sz=150):
 
         # recursive call for
         # the left subtree
-        y(level = level - 1, angle = angle, pbar=pbar, sz = 0.8 * sz)
+        y(level = level - 1, angle = angle, pbar=pbar, sz = 0.7 * sz)
         
         pencolor(0, 255//level, 0)
         
