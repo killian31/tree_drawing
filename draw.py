@@ -49,7 +49,7 @@ def time_to_complete(level):
     :return the time to complete a tree in seconds:
     """
     lines = nb_of_lines(level)
-    return lines/4
+    return lines/10
 
 def get_diff_times():
     times = [time_to_complete(lvl) for lvl in range(11, 15)]
@@ -61,7 +61,7 @@ def time_to_level(tps):
     """
     :tps: time in minutes 
     """
-    lines = 4*tps*60
+    lines = 10*tps*60
     level = int(np.log(lines + 1)/np.log(2) - 1)
     return level
 
@@ -78,6 +78,7 @@ def main():
     pencolor(random.randint(0, 256), random.randint(0, 256), random.randint(0, 256))
     screen = Screen()
     screen.setup(width = 1.0, height = 1.0)
+    screen.delay(0)
     speed(0.8)
     # turning the turtle to face upwards
     rt(90)
