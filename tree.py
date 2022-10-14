@@ -1,5 +1,5 @@
 import turtle
-from random import randint
+import random
 from tqdm import tqdm
 from tkinter import * 
 from PIL import Image
@@ -46,7 +46,7 @@ def get_result(gens, axiom):
 # turtle.clear()
 # turtle.write(f'generation: {gens}', font=("Arial", 60, "normal"))
 
-def generate(gens, axiom, thickness, step):
+def generate(gens, axiom, thickness, step, angle):
     axiom = get_result(gens, axiom)
     leo.left(90)
     leo.pensize(thickness)
@@ -61,9 +61,9 @@ def generate(gens, axiom, thickness, step):
             thickness = max(1, thickness)
             leo.pensize(thickness)
         elif chr == '+':
-            leo.right(angle())
+            leo.right(angle)
         elif chr == '-':
-            leo.left(angle())
+            leo.left(angle)
         elif chr == '[':
             angle_, pos_ = leo.heading(), leo.pos()
             stack.append((angle_, pos_, thickness, step, color[1]))
@@ -77,6 +77,7 @@ def generate(gens, axiom, thickness, step):
 
 
 if __name__ == "__main__":
+    arbre = int(input("Type d'arbre (0, 1 ou 2) : "))
     gens = int(input("Nombre de ramifications : "))
     # screen settings
     WIDTH, HEIGHT = 1.0, 1.0
@@ -85,27 +86,39 @@ if __name__ == "__main__":
     #screen.screensize(WIDTH, HEIGHT)
     screen.delay(0)
     # turtle settings
-    turtle.hideturtle()
     leo = turtle.Turtle()
+    leo.hideturtle()
     leo.pensize(3)
     leo.speed(0)
     leo.penup()
-    leo.setpos(0, -300)
+    leo.setpos(0, -350)
     leo.pendown()
     leo.color('green')
     # l-system settings
     axiom = 'XY'
-    chr_1, rule_1 = 'X', 'F[@[-X]+X]'
-    step = 85
-    angle = lambda: randint(0, 45)
+    rules = ['F[@[-X]+X]', 'F-[@[X]+X]+F@[+FX]-X', 'F[@[+X]F[-@X]+X]']
+    
+    # 'F@[[+X]-FX]-F@[-FX]+X'
+    
+    size_thicknes_angle_dic = {
+        0 : (85, 20, random.randint(15, 41)),
+        1 : (65, 10, random.randint(15, 26)), 
+        2 : (75, 10, random.randint(15, 21))
+    }
+    
+    choice = arbre
+    chr_1, rule_1 = 'X', rules[choice]
+    step = size_thicknes_angle_dic[choice][0]
+    #angle = random.randint(0, 40)
+    angle = size_thicknes_angle_dic[choice][2]
     stack = []
     color = [0.35, 0.2, 0.0]
-    thickness = 20
+    thickness = size_thicknes_angle_dic[choice][1]
 
-    generate(gens, axiom, thickness, step)
+    generate(gens, axiom, thickness, step, angle)
 
-    ts = leo.getscreen()
-    file_img = f"tree{gens}"
-    ts.getcanvas().postscript(file=file_img + ".eps")
-    eps_to_png(file_img, file_img)
+    #ts = leo.getscreen()
+    #file_img = f"tree{gens}"
+    #ts.getcanvas().postscript(file=file_img + ".eps")
+    #eps_to_png(file_img, file_img)
     screen.exitonclick()
